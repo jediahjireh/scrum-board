@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -126,7 +128,21 @@ export default function Aurora(props) {
     const gl = renderer.gl;
     gl.clearColor(1, 1, 1, 1);
 
-    let program;
+    const program = new Program(gl, {
+      vertex: VERT,
+      fragment: FRAG,
+      uniforms: {
+        uTime: { value: 0 },
+        uAmplitude: { value: amplitude },
+        uColorStops: {
+          value: colorStops.map((hex) => {
+            const c = new Color(hex);
+            return [c.r, c.g, c.b];
+          }),
+        },
+        uResolution: { value: [ctn.offsetWidth, ctn.offsetHeight] },
+      },
+    });
 
     function resize() {
       if (!ctn) return;
