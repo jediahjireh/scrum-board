@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "react-hot-toast";
 
 import Navbar from "@/components/Navbar";
 
@@ -25,9 +26,12 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={`${openSans.className} antialiased`}>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${openSans.className} bg-black text-white antialiased`}
+        >
           <Navbar />
+          <Toaster />
           {children}
         </body>
       </html>
